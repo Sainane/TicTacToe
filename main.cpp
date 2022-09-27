@@ -1,7 +1,5 @@
 #include <iostream>
-#include <array>
-#define joueur1 "X"
-#define joueur2 "O"
+
 using namespace std;
 const uint8_t gridSize = 3;
 int gameGrid[gridSize][gridSize] = {
