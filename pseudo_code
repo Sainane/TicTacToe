@@ -1,0 +1,23 @@
+#Entrees
+pos00
+pos01
+pos02
+pos10
+pos11
+pos12
+pos20
+pos21
+pos22
+
+#sortie
+
+#Algorithme
+SI  pos00 AND pos01 AND pos02
+    or pos10 AND pos11 AND pos12
+    .
+    .
+    .
+    OR ...
+    ALORS Gagne
+
+
