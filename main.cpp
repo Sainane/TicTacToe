@@ -2,26 +2,50 @@
 
 using namespace std;
 const uint8_t gridSize = 3;
-int gameGrid[gridSize][gridSize] = {
-        {0,2, 1},
-        {0,2, 0},
-        {1, 2, 1} };
+int gameGrid[gridSize][gridSize] = {};
 
 
-
-
+bool joueur = 0;
+int coordonee = 0;
 int gagnant;
+void printGrid();
 bool win(int &gagnant_);
 bool draw();
+bool legalMove = false;
+bool fin = false;
 int main() {
-    if(win(gagnant)) {
-        if(gagnant == 1) {
-            cout << "Le joueur 1 a gagne" << endl;
-        } else if (gagnant == 2) {
-            cout << "Le joueur 2 a gagne" << endl;
+    joueur = false;
+    cout << "Entrez les coordonnees comme 11, 12...33"  << endl;
+    while(!fin) {
+        do {
+            legalMove = false;
+
+            cout << "Joueur " << joueur << " : " << endl;
+            cin >> coordonee;
+            int x = coordonee/10;
+            int y = coordonee%10;
+            if(x >= 0 and x <= 2 and y >= 0 and y<= 2 and gameGrid[x][y] == 0) {
+                legalMove = true;
+            } else {
+                cout << "Coup illegal, reesayez : " << endl;
+            }
+        } while(!legalMove);
+        gameGrid[coordonee / 10][coordonee % 10] = 1 + joueur;
+
+        printGrid();
+        if (win(gagnant)) {
+            fin = true;
+            if (gagnant == 1) {
+                cout << "Le joueur 1 a gagne" << endl;
+            } else if (gagnant == 2) {
+                cout << "Le joueur 2 a gagne" << endl;
+            }
+        } else if (draw()) {
+            cout << "Match nul" << endl;
+            fin = true;
+        } else {
+            joueur = !joueur;
         }
-    } else if(draw()) {
-        cout << "Match nul" << endl;
     }
 
     return 0;
@@ -60,4 +84,24 @@ bool draw() {
         }
     }
     return true;
+}
+
+void printGrid() {
+    for(int i = 0; i < gridSize; i++) {
+        for(int j = 0; j < gridSize; j++) {
+            switch(gameGrid[i][j]) {
+                case 0 :
+                    cout << '-';
+                    break;
+                case 1 :
+                    cout << 'X';
+                    break;
+                case 2 :
+                    cout << 'O';
+                    break;
+            }
+            cout << ' ';
+        }
+        cout << endl;
+    }
 }
