@@ -5,7 +5,7 @@ const uint8_t gridSize = 3;
 int gameGrid[gridSize][gridSize] = {};
 
 
-bool joueur = 0;
+bool joueur = false;
 int coordonee = 0;
 int gagnant;
 void printGrid();
@@ -15,22 +15,28 @@ bool legalMove = false;
 bool fin = false;
 int main() {
     joueur = false;
-    cout << "Entrez les coordonnees comme 11, 12...33"  << endl;
+    cout << "Entrez les coordonnees du tableau (00, 01, 02, 10...22)"  << endl;
     while(!fin) {
         do {
             legalMove = false;
 
             cout << "Joueur " << joueur << " : " << endl;
-            cin >> coordonee;
-            int x = coordonee/10;
-            int y = coordonee%10;
-            if(x >= 0 and x <= 2 and y >= 0 and y<= 2 and gameGrid[x][y] == 0) {
-                legalMove = true;
+            if(cin >> coordonee) {
+                int x = coordonee / 10;
+                int y = coordonee % 10;
+                if (x >= 0 and x <= 2 and y >= 0 and y <= 2 and gameGrid[x][y] == 0) {
+                    legalMove = true;
+                } else {
+                    cout << "Coup illegal, reesayez : " << endl;
+                }
             } else {
-                cout << "Coup illegal, reesayez : " << endl;
+                cout << "Entree invalide : reessayez : " << endl;
+                cin.clear();
+                cin.ignore(10000, '\n');
+
             }
         } while(!legalMove);
-        gameGrid[coordonee / 10][coordonee % 10] = 1 + joueur;
+        gameGrid[coordonee / 10][coordonee % 10] = 1 + int(joueur);
 
         printGrid();
         if (win(gagnant)) {
@@ -76,9 +82,9 @@ bool win(int &gagnant_) {
 }
 
 bool draw() {
-    for(int i = 0; i < gridSize; i++) {
-        for(int j = 0; j < gridSize; j++) {
-            if(gameGrid[i][j] == 0) {
+    for(auto & i : gameGrid) {
+        for(int j : i) {
+            if(j == 0) {
                 return false;
             }
         }
@@ -87,9 +93,9 @@ bool draw() {
 }
 
 void printGrid() {
-    for(int i = 0; i < gridSize; i++) {
-        for(int j = 0; j < gridSize; j++) {
-            switch(gameGrid[i][j]) {
+    for(auto & i : gameGrid) {
+        for(int j : i) {
+            switch(j) {
                 case 0 :
                     cout << '-';
                     break;
