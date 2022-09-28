@@ -102,9 +102,9 @@ bool draw() {
 }
 
 void printGrid() {
-    for(auto & i : gameGrid) {
-        for(int j : i) {
-            switch(j) {
+    for(int i = 0; i < gridSize; i++) {
+        for(int j= 0; j < gridSize; j++) {
+            switch(gameGrid[i][j]) {
                 case 0 :
                     cout << '-';
                     break;
@@ -115,9 +115,11 @@ void printGrid() {
                     cout << 'O';
                     break;
             }
-            cout << ' ';
+
+
         }
         cout << endl;
+
     }
 }
 bool computer(int joueur) {
