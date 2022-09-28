@@ -1,12 +1,17 @@
 #include <iostream>
+#include <random>
 
 using namespace std;
 const uint8_t gridSize = 3;
 int gameGrid[gridSize][gridSize] = {};
+random_device rd;   // non-deterministic generator
+mt19937 gen(rd());  // to seed mersenne twister.
+uniform_int_distribution<> dist(0,2); // distribute results between 1 and 6 inclusive.
 
-
+bool ai = true;
 bool joueur = false;
 int coordonee = 0;
+bool computer(int joueur);
 int gagnant;
 void printGrid();
 bool win(int &gagnant_);
@@ -14,14 +19,16 @@ bool draw();
 bool legalMove = false;
 bool fin = false;
 int main() {
+
     joueur = false;
     cout << "Entrez les coordonnees du tableau (00, 01, 02, 10...22)"  << endl;
     while(!fin) {
+        if (!joueur or !ai) {
         do {
             legalMove = false;
 
-            cout << "Joueur " << joueur << " : " << endl;
-            if(cin >> coordonee) {
+            cout << "Joueur " << int(joueur) + 1 << " : " << endl;
+            if (cin >> coordonee) {
                 int x = coordonee / 10;
                 int y = coordonee % 10;
                 if (x >= 0 and x <= 2 and y >= 0 and y <= 2 and gameGrid[x][y] == 0) {
@@ -32,12 +39,14 @@ int main() {
             } else {
                 cout << "Entree invalide : reessayez : " << endl;
                 cin.clear();
-                cin.ignore(10000, '\n');
+                cin.ignore(1000000000, '\n');
 
             }
-        } while(!legalMove);
+        } while (!legalMove);
         gameGrid[coordonee / 10][coordonee % 10] = 1 + int(joueur);
-
+    } else {
+        while(!computer(int(joueur) + 1));
+    }
         printGrid();
         if (win(gagnant)) {
             fin = true;
@@ -110,4 +119,16 @@ void printGrid() {
         }
         cout << endl;
     }
+}
+bool computer(int joueur) {
+
+    int x = dist(gen);
+    int y = dist(gen);
+   if(gameGrid[x][y] == 0) {
+       gameGrid[x][y] = joueur;
+       cout << "Ordinateur : ";
+       cout << x << y << endl;
+       return true;
+   }
+   return false;
 }
