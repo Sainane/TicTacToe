@@ -1,3 +1,19 @@
 Ce labo est un programme de tic-tac-toe.
 
-Le but du jeu est de
+Le but du jeu est d'avoir trois X à la suite pour gagner. On joue contre l'ordi qui joue les O.
+
+Le moyen de jouer est en utilisant le clavier. La première position du quadrillage est la position 00 (un haut à gauche)
+et la dernière position est le 22 (en bas à droite). Tout autre touche est interdite.
+Quand troix X se suivent a l'horizonzal, la verticale ou sur la diagonale c'est gagné. Si à la fin du jeu
+il n'y a aucun O ou X qui se suivent alors c'est une égalité.
+Dès que le qu'il y a un gagnant ou une égalité, le jeu est fini.
+
+Enjoy!
+
+Schéma des positions:
+
+00 | 01 | 02
+-------------
+10 | 11 | 12
+-------------
+20 | 21 | 22
